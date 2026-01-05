@@ -17,7 +17,7 @@
 			<div class="row align-items-center">
 				<div class="col-auto profile-image">
 					<a href="#">
-						<img class="rounded-circle" alt="User Image" src="{{!empty(auth()->user()->avatar) ? asset('storage/users/'.auth()->user()->avatar): asset('assets/img/avatar_1nn.png')}}">
+						<img class="rounded-circle" alt="User Image" src="{{!empty(auth()->user()->avatar) ? asset('storage/users/'.auth()->user()->avatar): asset('assets/img/default_profile.png')}}">
 					</a>
 				</div>
 				<div class="col ml-md-n2 profile-user-info">

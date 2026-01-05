@@ -21,11 +21,10 @@
 
     <link rel="stylesheet" href="{{asset('assets/css/icons.min.css')}}">
     <!-- Snackbar CSS -->
-	<link rel="stylesheet" href="{{asset('assets/plugins/snackbar/snackbar.min.css')}}">
+
     <!-- Sweet Alert css -->
     <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2/sweetalert2.min.css')}}">
-    <!-- Snackbar Css -->
-    <link rel="stylesheet" href="{{asset('assets/plugins/snackbar/snackbar.min.css')}}">
+
     <!-- Select2 Css -->
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
     <!-- Main CSS -->
@@ -177,8 +176,7 @@
 <script src="{{asset('assets/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
 <!-- Sweet Alert Js -->
 <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-<!-- Snackbar Js -->
-<script src="{{asset('assets/plugins/snackbar/snackbar.min.js')}}"></script>
+
 <!-- Select2 JS -->
 <script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
 <!-- Custom JS -->
@@ -225,50 +223,7 @@
             ]).catch(swal.noop);
         }); 
     });
-    @if(Session::has('message'))
-        var type = "{{ Session::get('alert-type', 'info') }}";
-        switch(type){
-            case 'info':
-                Snackbar.show({
-                    text: "{{ Session::get('message') }}",
-                    pos: 'top-right',
-                    actionText: 'Dismiss',
-                    actionTextColor: '#fff',
-                    backgroundColor: '#2196f3'
-                });
-                break;
 
-            case 'warning':
-                Snackbar.show({
-                    text: "{{ Session::get('message') }}",
-                    pos: 'top-right',
-                    actionText: 'Dismiss',
-                    actionTextColor: '#fff',
-                    backgroundColor: '#e2a03f'
-                });
-                break;
-
-            case 'success':
-                Snackbar.show({
-                    text: "{{ Session::get('message') }}",
-                    pos: 'top-right',
-                    actionText: 'Dismiss',
-                    actionTextColor: '#fff',
-                    backgroundColor: '#8dbf42'
-                });
-                break;
-
-            case 'danger':
-                Snackbar.show({
-                    text: "{{ Session::get('message') }}",
-                    pos: 'top-right',
-                    actionText: 'Dismiss',
-                    actionTextColor: '#fff',
-                    backgroundColor: '#e7515a'
-                });
-                break;
-        }
-    @endif
 </script>
 <!-- Page JS -->
 @stack('page-js')
