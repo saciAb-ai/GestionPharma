@@ -31,7 +31,7 @@
 <!-- /Form -->
 
 <div class="text-center mt-3">
-    <a href="{{route('password.request')}}" class="text-muted hover-primary">Forgot Password?</a>
+    <a href="javascript:void(0);" onclick="alert('Please contact the System Administrator to reset your password.');" class="text-muted hover-primary">Forgot Password?</a>
 </div>
 <div class="text-center mt-2 text-muted">
     Don’t have an account? <a href="{{route('register')}}" class="text-primary font-weight-bold">Register</a>

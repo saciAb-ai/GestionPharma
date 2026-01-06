@@ -9,8 +9,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\Auth\RegisterController;
-use App\Http\Controllers\Admin\Auth\ResetPasswordController;
-use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
+
 use App\Http\Controllers\Admin\CategoryController;
 
 use App\Http\Controllers\Admin\ProductController;
@@ -71,10 +70,7 @@ Route::middleware(['guest'])->prefix('admin')->group(function () {
     Route::get('register',[RegisterController::class,'index'])->name('register');
     Route::post('register',[RegisterController::class,'store']);
 
-    Route::get('forgot-password',[ForgotPasswordController::class,'index'])->name('password.request');
-    Route::post('forgot-password',[ForgotPasswordController::class,'requestEmail']);
-    Route::get('reset-password/{token}',[ResetPasswordController::class,'index'])->name('password.reset');
-    Route::post('reset-password',[ResetPasswordController::class,'resetPassword'])->name('password.update');
+
 });
 
 Route::get('/', function () {
