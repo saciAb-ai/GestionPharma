@@ -92,40 +92,35 @@ class SaleController extends Controller
             'product'=>'required',
             'quantity'=>'required|integer|min:1'
         ]);
-        $sold_product = Product::find($request->product);
         
-        /**update quantity of
-            sold item from
-         purchases
-        **/
+        $sold_product = Product::find($request->product);
         $purchased_item = Purchase::find($sold_product->purchase->id);
+
+        if ($request->quantity > $purchased_item->quantity) {
+            return back()->with(notify("Quantité insuffisante en stock! (Disponible: ".$purchased_item->quantity.")", "danger"));
+        }
+
         $new_quantity = ($purchased_item->quantity) - ($request->quantity);
-        $notification = '';
-        if (!($new_quantity < 0)){
 
-            $purchased_item->update([
+        $purchased_item->update([
                 'quantity'=>$new_quantity,
-            ]);
+        ]);
 
-            /**
-             * calcualting item's total price
-            **/
-            $total_price = ($request->quantity) * ($sold_product->price);
-            Sale::create([
-                'product_id'=>$request->product,
-                'quantity'=>$request->quantity,
-                'total_price'=>$total_price,
-            ]);
+        $total_price = ($request->quantity) * ($sold_product->price);
+        Sale::create([
+            'product_id'=>$request->product,
+            'quantity'=>$request->quantity,
+            'total_price'=>$total_price,
+        ]);
 
-            $notification = notify("Product has been sold");
-        } 
+        $notification = notify("Product has been sold");
+
         if($new_quantity <=1 && $new_quantity !=0){
             // send notification 
             $product = Purchase::where('quantity', '<=', 1)->first();
             event(new PurchaseOutStock($product));
             // end of notification 
             $notification = notify("Product is running out of stock!!!");
-            
         }
 
         return redirect()->route('sales.index')->with($notification);
@@ -161,44 +156,40 @@ class SaleController extends Controller
             'product'=>'required',
             'quantity'=>'required|integer|min:1'
         ]);
+
         $sold_product = Product::find($request->product);
-        /**
-         * update quantity of sold item from purchases
-        **/
         $purchased_item = Purchase::find($sold_product->purchase->id);
-        if(!empty($request->quantity)){
-            $new_quantity = ($purchased_item->quantity) - ($request->quantity);
+
+        // Calculate available stock including what was already sold in this record
+        $available_stock = $purchased_item->quantity + $sale->quantity;
+
+        if ($request->quantity > $available_stock) {
+            return back()->with(notify("Quantité insuffisante en stock! (Disponible: ".$available_stock.")", "danger"));
         }
-        $new_quantity = $sale->quantity;
-        $notification = '';
-        if (!($new_quantity < 0)){
-            $purchased_item->update([
-                'quantity'=>$new_quantity,
-            ]);
 
-            /**
-             * calcualting item's total price
-            **/
-            if(!empty($request->quantity)){
-                $total_price = ($request->quantity) * ($sold_product->price);
-            }
-            $total_price = $sale->total_price;
-            $sale->update([
-                'product_id'=>$request->product,
-                'quantity'=>$request->quantity,
-                'total_price'=>$total_price,
-            ]);
+        $new_stock_quantity = $available_stock - $request->quantity;
 
-            $notification = notify("Product has been updated");
-        } 
-        if($new_quantity <=1 && $new_quantity !=0){
+        $purchased_item->update([
+                'quantity'=>$new_stock_quantity,
+        ]);
+
+        $total_price = ($request->quantity) * ($sold_product->price);
+        $sale->update([
+            'product_id'=>$request->product,
+            'quantity'=>$request->quantity,
+            'total_price'=>$total_price,
+        ]);
+
+        $notification = notify("Product has been updated");
+
+        if($new_stock_quantity <=1 && $new_stock_quantity !=0){
             // send notification 
             $product = Purchase::where('quantity', '<=', 1)->first();
             event(new PurchaseOutStock($product));
             // end of notification 
             $notification = notify("Product is running out of stock!!!");
-            
         }
+
         return redirect()->route('sales.index')->with($notification);
     }
 

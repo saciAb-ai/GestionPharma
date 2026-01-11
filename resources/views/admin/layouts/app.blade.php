@@ -153,6 +153,21 @@
                         <x-alerts.danger :error="$error" />
                     @endforeach
                 @endif
+                
+                @if (session('message'))
+                    @if (session('alert-type') == 'success')
+                        <x-alerts.success :message="session('message')" />
+                    @elseif (session('alert-type') == 'danger' || session('alert-type') == 'error')
+                        <x-alerts.danger :error="session('message')" />
+                    @else
+                        <div class="alert alert-{{session('alert-type', 'info')}} alert-dismissible fade show" role="alert">
+                            {{session('message')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                @endif
 
                 @yield('content')
                 <!-- add sales modal-->

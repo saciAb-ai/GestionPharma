@@ -25,8 +25,8 @@ if(!function_exists('route_is')){
 if(!function_exists('notify')){
     function notify($message , $type='success'){
         return array(
-            'message'=> null,
-            'alert-type' => null,
+            'message'=> $message,
+            'alert-type' => $type,
         );
     }
 }
