@@ -13,7 +13,7 @@ GestionPharma est une application web conçue pour gérer le stock, les ventes e
 ## 🛠 Prérequis
 
 Avant de commencer, assurez-vous d'avoir installé :
-- **PHP** >= 8.5
+- **PHP** >= 7.3 (
 - **Composer** (Gestionnaire de dépendances PHP)
 - **MySQL**
 - **Node.js & NPM** (Pour compiler les assets CSS/JS)
