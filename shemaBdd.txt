@@ -1,0 +1,24 @@
+Voici le schéma final et épuré de votre base de données. C'est une structure 100% métier, sans tables inutiles.
+
+🛡️ 1. Authentification et Accès
+Ces tables gèrent qui peut entrer et ce qu'ils peuvent faire.
+
+Table	Rôle	Contenu actuel
+users	Utilisateurs	saci@gmail.com (Admin), vendeur@gmail.com (Vendeur).
+roles	Groupes de droits	Uniquement super-admin et sales-person.
+permissions	Actions autorisées	view-sales, create-product, etc.
+model_has_roles	Liaison	Associe vos utilisateurs à leurs rôles respectifs.
+role_has_permissions	Droits par rôle	Définit ce que l'Admin et le Vendeur peuvent voir/faire.
+💊 2. Gestion du Stock (Achats)
+Ces tables gèrent l'arrivée des médicaments dans votre pharmacie.
+
+Table	Rôle	Champs Clés
+suppliers	Fournisseurs	Saidal, Biopharm, Sanofi, etc.
+categories	Familles de produits	Médicaments, Antibiotiques, Dermocosmétique...
+purchases	Le Stock Principal	Nom du produit, Prix d'achat, Quantité reçue, Date d'expiration.
+💰 3. Ventes et Catalogue
+Ces tables gèrent ce que vous vendez aux clients à partir de votre stock.
+
+Table	Rôle	Champs Clés
+products	Catalogue Vente	Lien vers Achat, Prix de vente public, Remise (%), Description.
+sales	Transactions	Produit vendu, Quantité vendue, Prix Total.
