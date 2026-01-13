@@ -32,5 +32,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456789'),
         ]);
         $sales->assignRole('sales-person');
+
+        // 3. Fake Users
+        // User::factory()->count(10)->create();
     }
 }

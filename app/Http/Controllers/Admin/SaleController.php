@@ -101,7 +101,7 @@ class SaleController extends Controller
         }
         
         if (Carbon::now()->gt(Carbon::parse($purchased_item->expiry_date))) {
-            return back()->with(notify("Ce produit est expiré et ne peut pas être vendu!", "danger"));
+            return back()->with(notify("This product is expired and cannot be sold!!", "danger"));
         }
 
         $new_quantity = ($purchased_item->quantity) - ($request->quantity);

@@ -104,5 +104,16 @@ class PurchaseSeeder extends Seeder
                 'description' => $item['desc']
             ]);
         }
+
+        // Generate fake purchases and products
+        /*
+        Purchase::factory()->count(20)->create()->each(function ($purchase) {
+            Product::factory()->create([
+                'purchase_id' => $purchase->id,
+                'price' => $purchase->cost_price * 1.25, // 25% margin
+                'description' => $purchase->product . ' description',
+            ]);
+        });
+        */
     }
 }

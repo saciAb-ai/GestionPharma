@@ -14,5 +14,8 @@ class CategorySeeder extends Seeder
         foreach ($categories as $cat) {
             Category::firstOrCreate(['name' => $cat]);
         }
+        
+        // Generate fake categories
+        // Category::factory()->count(5)->create();
     }
 }
